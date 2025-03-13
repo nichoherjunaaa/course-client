@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom'
-import ManagerHome from '../pages/ManagerHome'
+import ManagerHome from '../pages/Manager/Home'
 import SignInPage from '../pages/SignIn'
 import SignUpPage from '../pages/SignUp'
 import SuccessCheckout from '../pages/SuccessCheckout'
 import Layout from '../components/layout'
+import ManageCourse from '../pages/Manager/Courses'
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,10 @@ const router = createBrowserRouter([
             {
                 index : true,
                 element: <ManagerHome />
-                
+            },
+            {
+                path: 'courses',
+                element: <ManageCourse/>
             }
         ]
     }
