@@ -1,5 +1,5 @@
 import React from "react";
-import CardCourse from "../../../components/card";
+import CardCourse from "./card";
 const ManageCourse = () => {
     const courses = [
         {
@@ -50,25 +50,7 @@ const ManageCourse = () => {
             </header>
 
             <section id="CourseList" className="flex flex-col w-full rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">
-            {courses.map((course) => (
-                <CardCourse key={course.id} course={course} />
-            ))}
-                <div id="Pagination" className="flex items-center gap-3">
-                    {[1, 2, 3, 4, 5].map((page) => (
-                        <button
-                            key={page}
-                            type="button"
-                            className={`flex shrink-0 w-9 h-9 rounded-full items-center justify-center text-center transition-all duration-300 
-                            ${
-                                page === 1
-                                    ? "bg-[#662FFF] text-white"
-                                    : "border border-[#060A23] hover:bg-[#662FFF] hover:text-white hover:border-0"
-                            }`}
-                        >
-                            <span className="font-semibold text-sm leading-[21px]">{page}</span>
-                        </button>
-                    ))}
-                </div>
+            <CardCourse/>
             </section>
         </>
     );
