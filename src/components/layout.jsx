@@ -7,8 +7,8 @@ import { Outlet, useMatch } from 'react-router-dom';
 import ManagePreviewPage from '../pages/Manager/CoursePreview';
 const Layout = ({isAdmin = true}) => {
     const isPreviewPage = useMatch('manager/courses/:id/preview');
-    console.log(isPreviewPage);
-
+    console.log(isAdmin);
+    
     return (
         <>
             {isPreviewPage !== null ? (
