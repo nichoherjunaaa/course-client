@@ -8,6 +8,7 @@ import ManageCourse from '../pages/Manager/Courses'
 import CreateCoursePage from '../pages/Manager/CreateCourse'
 import DetailCoursePage from '../pages/Manager/CourseDetail'
 import CourseContentCreate from '../pages/Manager/course-content-create'
+import ManagePreviewPage from '../pages/Manager/CoursePreview'
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
             {
                 path: 'courses/:id/create', // Fixed the missing closing quote here
                 element: <CourseContentCreate />
+            },
+            {
+                path : 'courses/:id/preview',
+                element : <ManagePreviewPage/>
             }
         ]
     }

@@ -3,17 +3,26 @@ import Sidebar from './sidebar';
 import Header from './header';
 import Courses from '../pages/Manager/Home/courses';
 import Students from '../pages/Manager/Home/students';
-import {Outlet} from 'react-router-dom';
-
+import { Outlet, useMatch } from 'react-router-dom';
+import ManagePreviewPage from '../pages/Manager/CoursePreview';
 const Layout = () => {
+    const isPreviewPage = useMatch('manager/courses/:id/preview');
+    console.log(isPreviewPage);
+
     return (
-        <div className="flex min-h-screen">
-            <Sidebar />
-            <main className="flex flex-col flex-1 gap-[30px] p-[30px] ml-[290px]">
-                <Header />
+        <>
+            {isPreviewPage !== null ? (
                 <Outlet />
-            </main>
-        </div>
+            ) : (
+                <div className="flex min-h-screen">
+                    <Sidebar />
+                    <main className="flex flex-col flex-1 gap-[30px] p-[30px] ml-[290px]">
+                        <Header />
+                        <Outlet />
+                    </main>
+                </div>
+            )}
+        </>
     );
 }
 

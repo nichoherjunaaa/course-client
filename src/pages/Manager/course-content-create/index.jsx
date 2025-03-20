@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const CourseContentCreate = () => {
     const handleSaveAsDraft = () => {
         // Function implementation here
@@ -57,6 +58,7 @@ const CourseContentCreate = () => {
                 </div>
                 <div className="flex flex-col gap-[10px]">
                     <label className="font-semibold">Content Text</label>
+                    
                 </div>
                 <div className="flex items-center gap-[14px]">
                     <button type="button" className="w-full rounded-full border border-[#060A23] p-[14px_20px] font-semibold text-nowrap" onClick={handleSaveAsDraft}>
@@ -70,5 +72,6 @@ const CourseContentCreate = () => {
         </>
     );
 }
+
 
 export default CourseContentCreate;
