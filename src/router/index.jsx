@@ -7,6 +7,7 @@ import Layout from '../components/layout'
 import ManageCourse from '../pages/Manager/Courses'
 import CreateCoursePage from '../pages/Manager/CreateCourse'
 import DetailCoursePage from '../pages/Manager/CourseDetail'
+import CourseContentCreate from '../pages/Manager/course-content-create'
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path : 'courses/:id',
                 element : <DetailCoursePage/>
+            },
+            {
+                path: 'courses/:id/create', // Fixed the missing closing quote here
+                element: <CourseContentCreate />
             }
         ]
     }
