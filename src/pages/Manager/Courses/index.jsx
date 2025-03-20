@@ -1,5 +1,6 @@
 import React from "react";
 import CardCourse from "./card";
+import { Link } from 'react-router-dom';
 const ManageCourse = () => {
     const courses = [
         {
@@ -40,16 +41,18 @@ const ManageCourse = () => {
                     <p className="text-[#838C9D] mt-1">Give the best future for your great employees</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <a href="#" className="w-fit rounded-full border border-[#060A23] px-5 py-3 font-semibold text-nowrap">
+                    <Link to="" className="w-fit rounded-full border border-[#060A23] px-5 py-3 font-semibold text-nowrap">
                         Import File
-                    </a>
-                    <a href="create-new-course.html" className="w-fit rounded-full px-5 py-3 font-semibold text-white bg-[#662FFF] text-nowrap">
+                    </Link>
+                    <Link to="/manager/courses/create" className="w-fit rounded-full px-5 py-3 font-semibold text-white bg-[#662FFF] text-nowrap">
                         New Course
-                    </a>
+                    </Link>
                 </div>
             </header>
 
             <section id="CourseList" className="flex flex-col w-full rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">
+            <CardCourse/>
+            <CardCourse/>
             <CardCourse/>
             </section>
         </>
