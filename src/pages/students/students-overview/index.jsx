@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import CardCourse from './card-course';
+import CardCourse from '../card-course';
 const StudentPage = () => {
     return (
         <section id="LatestCourse" className="flex flex-col rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">

@@ -1,16 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom'
-import ManagerHome from '../pages/Manager/Home'
-import SignInPage from '../pages/SignIn'
-import SignUpPage from '../pages/SignUp'
-import SuccessCheckout from '../pages/SuccessCheckout'
+import ManagerHome from '../pages/manage/home'
+import SignInPage from '../pages/sign-in'
+import SignUpPage from '../pages/sign-up'
+import SuccessCheckout from '../pages/success-checkout'
 import Layout from '../components/layout'
-import ManageCourse from '../pages/Manager/Courses'
-import CreateCoursePage from '../pages/Manager/CreateCourse'
-import DetailCoursePage from '../pages/Manager/CourseDetail'
-import CourseContentCreate from '../pages/Manager/course-content-create'
-import ManagePreviewPage from '../pages/Manager/CoursePreview'
-import ManageStudentsPage from '../pages/Manager/students'
-import StudentPage from '../pages/students'
+import ManageCourse from '../pages/manage/courses'
+import CreateCoursePage from '../pages/manage/create-course'
+import DetailCoursePage from '../pages/manage/course-detail'
+import CourseContentCreate from '../pages/manage/course-content-create'
+import ManagePreviewPage from '../pages/manage/course-preview'
+import ManageStudentsPage from '../pages/manage/students'
+import StudentPage from '../pages/students/students-overview'
 
 const router = createBrowserRouter([
     {
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path : "/students",
+        path : "students",
         element : <Layout isAdmin={false} />,
         children : [
             {
