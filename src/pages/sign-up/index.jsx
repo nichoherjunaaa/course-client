@@ -5,9 +5,8 @@ import Pricing from './pricing'
 const SignUpPage = () => {
     return (
         <>
-            {/* <FormPage /> */}
+            <FormPage />
             <Pricing />
-
         </>
     )
 }

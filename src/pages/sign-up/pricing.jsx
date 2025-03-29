@@ -13,7 +13,7 @@ const Pricing = () => {
             </div>
 
             {/* Navigation */}
-            <nav className="flex items-center justify-between p-8">
+            {/* <nav className="flex items-center justify-between p-8">
                 <Navbar />
                 <div className="flex items-center gap-3">
                     {[
@@ -27,7 +27,7 @@ const Pricing = () => {
                         </Link>
                     ))}
                 </div>
-            </nav>
+            </nav> */}
 
             {/* Header */}
             <header className="flex flex-col items-center gap-5 text-center mt-12">
