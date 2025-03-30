@@ -6,7 +6,7 @@ const SignUpPage = () => {
     return (
         <>
             <FormPage />
-            <Pricing />
+            {/* <Pricing /> */}
         </>
     )
 }

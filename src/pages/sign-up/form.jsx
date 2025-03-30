@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from './../../../node_modules/@hookform/resolvers/zod/src/zod';
 import { useForm } from 'react-hook-form';
 import { signUpSchema } from "../../utils/zodSchema";
+import { useState } from 'react';
+import Pricing from "./pricing";
 
 const FormPage = () => {
+
+    const [dataSignUp, setDataSignUp] = useState(null)
+    const [mode, setMode] = useState("AUTH");
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(signUpSchema)
@@ -12,10 +17,13 @@ const FormPage = () => {
 
     const onSubmit = (data) => {
         console.log(data)
+        setDataSignUp(data)
+        setMode("PRICING")
     }
 
     return (
         <>
+            {mode === "AUTH" ? (
             <div className="relative flex flex-col flex-1 p-[10px]">
                 <div className="absolute w-[calc(100%-20px)] min-h-[calc(100vh-20px)] h-[calc(100%-20px)] bg-[#060A23] -z-10 rounded-[20px]">
                     <img src="/assets/images/backgrounds/background-glow.png" className="absolute bottom-0 transform -translate-x-1/2 left-1/2" alt="" />
@@ -74,6 +82,9 @@ const FormPage = () => {
                     </div>
                 </div>
             </div>
+            ) : (
+                <Pricing/>
+            )}
         </>
     );
 }
