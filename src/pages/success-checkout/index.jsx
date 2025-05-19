@@ -22,7 +22,7 @@ const SuccessCheckout = () => {
                     </Link>
                 </div>
             </nav>
-            <h1 className="font-extrabold text-[46px] leading-[69px] text-white text-center m-auto">Open Midtrans <br />Payment gateway</h1>
+            <h1 className="font-extrabold text-[46px] leading-[69px] text-white text-center m-auto">Success Checkout <br />Please log in to continue</h1>
             <Link to="/manager/sign-in">
                 <div class="flex items-center justify-center gap-3 w-max mx-auto mt-5 rounded-full border p-[20px_50px] transition-all duration-300 hover:bg-[#662FFF] hover:border-[#8661EE] hover:shadow-[-10px_-6px_10px_0_#7F33FF_inset] bg-[#662FFF] border-[#8661EE] shadow-[-10px_-6px_10px_0_#7F33FF_inset]">
                     <span class="font-semibold text-white">Sign In Now</span>
