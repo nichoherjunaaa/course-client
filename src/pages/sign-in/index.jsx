@@ -1,8 +1,43 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Navbar from '../../components/navbar';
+import { signInSchema } from '../../../../server/src/utils/schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { postSignIn } from '../../service/authService';
+import secureLocalStorage from 'react-secure-storage';
+import { STORAGE_KEY } from '../../utils/const';
+import { useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(signInSchema)
+    })
+
+    const {isLoading, mutateAsync} = useMutation({
+        mutationFn: async (data) => postSignIn(data)
+    })
+
+    const navigate = useNavigate();
+
+    const onSubmit = async(data) => {
+        // console.log(data)
+        try {
+            const response = await mutateAsync(data);
+            console.log(response);
+            secureLocalStorage.setItem(STORAGE_KEY, response.data);
+            if(response.data.role === 'manager') {
+                navigate('/manager')
+            } else{
+                navigate('/student')
+            }
+
+        } catch (error) {
+            console.log(error); 
+        }
+    }
     return (
         <>
             <div className="relative flex flex-col flex-1 p-[10px]">
@@ -14,7 +49,7 @@ const SignInPage = () => {
                     />
                 </div>
                 <nav className="flex items-center justify-between p-[30px]">
-                    <Navbar/>
+                    <Navbar />
                     <div className="flex items-center gap-3">
                         <Link to="#">
                             <div className="flex items-center gap-3 w-fit rounded-full border p-[14px_20px] transition-all duration-300 hover:bg-[#662FFF] hover:border-[#8661EE] hover:shadow-[-10px_-6px_10px_0_#7F33FF_inset] bg-[#070B24] border-[#24283E] shadow-[-10px_-6px_10px_0_#181A35_inset]">
@@ -36,6 +71,7 @@ const SignInPage = () => {
                 {/* Form Sign In */}
                 <form
                     className="flex flex-col w-[400px] h-fit rounded-[20px] border border-[#262A56] p-[30px] gap-[30px] bg-[#080A2A] m-auto"
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <div>
                         <h1 className="font-bold text-[26px] leading-[39px] text-white">
@@ -60,8 +96,10 @@ const SignInPage = () => {
                             id="email"
                             className="appearance-none outline-none !bg-transparent w-full font-semibold text-white placeholder:font-normal placeholder:text-[#6B6C7F]"
                             placeholder="Write your email address"
+                            {...register('email')}
                         />
                     </div>
+                        {errors.email?.message && <p className="text-red-500 text-xs -mt-5">{errors.email?.message}</p>}
 
                     <div>
                         <div className="flex items-center gap-3 w-full rounded-full border p-[14px_20px] transition-all duration-300 focus-within:border-[#8661EE] focus-within:shadow-[-10px_-6px_10px_0_#7F33FF_inset] bg-[#070B24] border-[#24283E] shadow-[-10px_-6px_10px_0_#181A35_inset]">
@@ -76,8 +114,10 @@ const SignInPage = () => {
                                 id="password"
                                 className="appearance-none outline-none !bg-transparent w-full font-semibold text-white placeholder:font-normal placeholder:text-[#6B6C7F]"
                                 placeholder="Type your secure password"
+                                {...register('password')}
                             />
                         </div>
+                            {errors.password?.message && <p className="text-red-500 text-xs mt-5">{errors.password?.message}</p>}
                         <div className="flex justify-end mt-[10px]">
                             <Link
                                 to="#"

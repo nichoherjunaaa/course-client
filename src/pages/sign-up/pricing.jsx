@@ -16,7 +16,7 @@ const Pricing = ({ data }) => {
                 return
             }
             const response = await mutateAsync();
-            console.log(response);
+            // console.log(response);
             window.location.replace(response.data.midtrans_payment_url)
         } catch (error) {
             console.log(error);
