@@ -1,37 +1,10 @@
 import React from "react";
 import CardCourse from "./card";
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 const ManageCourse = () => {
-    const courses = [
-        {
-            id: 1,
-            title: "Responsive Design Triclorem Lorem, ipsum dolor.",
-            students: "554 Students",
-            category: "Programming",
-            image: "/assets/images/thumbnails/th-1.png",
-        },
-        {
-            id: 2,
-            title: "HTMX JavaScript 2020",
-            students: "2,887 Students",
-            category: "Marketing",
-            image: "/assets/images/thumbnails/th-2.png",
-        },
-        {
-            id: 3,
-            title: "Mastering React",
-            students: "3,578 Students",
-            category: "Daily Work",
-            image: "/assets/images/thumbnails/th-3.png",
-        },
-        {
-            id: 4,
-            title: "Company Profile Multilorem Lorem, ipsum dolor.",
-            students: "2,887 Students",
-            category: "Marketing",
-            image: "/assets/images/thumbnails/th-3.png",
-        },
-    ];
+
+    const courses = useLoaderData();
+    console.log(courses);
 
     return (
         <>
@@ -51,9 +24,7 @@ const ManageCourse = () => {
             </header>
 
             <section id="CourseList" className="flex flex-col w-full rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">
-            <CardCourse/>
-            <CardCourse/>
-            <CardCourse/>
+                {courses?.data?.map((course) => <CardCourse key={course.id} category={course.category.name} id={course._id} imageUrl={course.thumbnail_url} name={course.name} totalStudents={course.total_students}/>)}
             </section>
         </>
     );
