@@ -16,26 +16,25 @@ const SignInPage = () => {
         resolver: zodResolver(signInSchema)
     })
 
-    const {isLoading, mutateAsync} = useMutation({
+    const { isLoading, mutateAsync } = useMutation({
         mutationFn: async (data) => postSignIn(data)
     })
 
     const navigate = useNavigate();
 
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         // console.log(data)
         try {
             const response = await mutateAsync(data);
-            console.log(response);
+            // console.log(response);
             secureLocalStorage.setItem(STORAGE_KEY, response.data);
-            if(response.data.role === 'manager') {
+            if (response.data.role === 'manager') {
                 navigate('/manager')
-            } else{
+            } else {
                 navigate('/student')
             }
-
         } catch (error) {
-            console.log(error); 
+            console.log(error);
         }
     }
     return (
@@ -99,7 +98,7 @@ const SignInPage = () => {
                             {...register('email')}
                         />
                     </div>
-                        {errors.email?.message && <p className="text-red-500 text-xs -mt-5">{errors.email?.message}</p>}
+                    {errors.email?.message && <p className="text-red-500 text-xs -mt-5">{errors.email?.message}</p>}
 
                     <div>
                         <div className="flex items-center gap-3 w-full rounded-full border p-[14px_20px] transition-all duration-300 focus-within:border-[#8661EE] focus-within:shadow-[-10px_-6px_10px_0_#7F33FF_inset] bg-[#070B24] border-[#24283E] shadow-[-10px_-6px_10px_0_#181A35_inset]">
@@ -117,7 +116,7 @@ const SignInPage = () => {
                                 {...register('password')}
                             />
                         </div>
-                            {errors.password?.message && <p className="text-red-500 text-xs mt-5">{errors.password?.message}</p>}
+                        {errors.password?.message && <p className="text-red-500 text-xs mt-5">{errors.password?.message}</p>}
                         <div className="flex justify-end mt-[10px]">
                             <Link
                                 to="#"

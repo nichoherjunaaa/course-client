@@ -11,6 +11,9 @@ import CourseContentCreate from '../pages/manage/course-content-create'
 import ManagePreviewPage from '../pages/manage/course-preview'
 import ManageStudentsPage from '../pages/manage/students'
 import StudentPage from '../pages/students/students-overview'
+import secureLocalStorage from 'react-secure-storage';
+import { MANAGER_SESSION, STORAGE_KEY } from './../utils/const';
+import { redirect } from 'react-router-dom';
 
 const router = createBrowserRouter([
     {
@@ -30,49 +33,59 @@ const router = createBrowserRouter([
         element: <SuccessCheckout />
     }, {
         path: 'manager',
+        id : MANAGER_SESSION,
+        loader: () => {
+            const session = secureLocalStorage.getItem(STORAGE_KEY);
+            // console.log('Session:', session);
+
+            if (!session || session.role !== 'manager') { 
+                throw redirect('/manager/sign-in');
+            }
+            return session;
+        },
         element: <Layout />,
         children: [
             {
-                index : true,
+                index: true,
                 element: <ManagerHome />
             },
             {
                 path: 'courses',
-                element: <ManageCourse/>
+                element: <ManageCourse />
             },
             {
-                path : 'courses/create',
-                element : <CreateCoursePage/>
+                path: 'courses/create',
+                element: <CreateCoursePage />
             },
             {
-                path : 'courses/:id',
-                element : <DetailCoursePage/>
+                path: 'courses/:id',
+                element: <DetailCoursePage />
             },
             {
-                path: 'courses/:id/create', // Fixed the missing closing quote here
+                path: 'courses/:id/create',
                 element: <CourseContentCreate />
             },
             {
-                path : 'courses/:id/preview',
-                element : <ManagePreviewPage/>
+                path: 'courses/:id/preview',
+                element: <ManagePreviewPage />
             },
             {
-                path : 'students',
-                element : <ManageStudentsPage/>
+                path: 'students',
+                element: <ManageStudentsPage />
             }
         ]
     },
     {
-        path : "students",
-        element : <Layout isAdmin={false} />,
-        children : [
+        path: "students",
+        element: <Layout isAdmin={false} />,
+        children: [
             {
-                index : true,
-                element : <StudentPage/>
+                index: true,
+                element: <StudentPage />
             },
             {
-                path : "detail-course/:id",
-                element : <ManagePreviewPage/>
+                path: "detail-course/:id",
+                element: <ManagePreviewPage />
             }
         ]
     }
