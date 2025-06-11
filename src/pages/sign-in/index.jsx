@@ -28,6 +28,8 @@ const SignInPage = () => {
             const response = await mutateAsync(data);
             // console.log(response);
             secureLocalStorage.setItem(STORAGE_KEY, response.data);
+            console.log(secureLocalStorage.getItem(STORAGE_KEY));
+            
             if (response.data.role === 'manager') {
                 navigate('/manager')
             } else {

@@ -15,6 +15,7 @@ import secureLocalStorage from 'react-secure-storage';
 import { MANAGER_SESSION, STORAGE_KEY } from './../utils/const';
 import { redirect } from 'react-router-dom';
 import { getCategories, getCourse } from '../service/courseService'
+import { isTokenExpired } from '../utils/isToken'
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,8 @@ const router = createBrowserRouter([
             const session = secureLocalStorage.getItem(STORAGE_KEY);
             // console.log('Session:', session);
 
-            if (!session || session.role !== 'manager') {
+            if (!session || session.role !== 'manager' || isTokenExpired(session.token)) {
+                secureLocalStorage.removeItem(STORAGE_KEY);
                 throw redirect('/manager/sign-in');
             }
             return session;

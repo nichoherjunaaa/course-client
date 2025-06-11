@@ -4,7 +4,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 const ManageCourse = () => {
 
     const courses = useLoaderData();
-    console.log(courses);
+    // console.log(courses);
 
     return (
         <>
@@ -24,7 +24,7 @@ const ManageCourse = () => {
             </header>
 
             <section id="CourseList" className="flex flex-col w-full rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">
-                {courses?.data?.map((course) => <CardCourse key={course.id} category={course.category.name} id={course._id} imageUrl={course.thumbnail_url} name={course.name} totalStudents={course.total_students}/>)}
+                {courses?.data?.map((course) => <CardCourse key={course._id} category={course.category.name} id={course._id} imageUrl={course.thumbnail_url} name={course.name} totalStudents={course.total_students}/>)}
             </section>
         </>
     );
