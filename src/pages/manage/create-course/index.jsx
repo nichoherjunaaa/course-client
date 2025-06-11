@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const CreateCoursePage = () => {
+    const categories = useLoaderData();
+    console.log(categories);
+
     return (
         <>
             <header className="flex items-center justify-between gap-[30px]">
@@ -50,9 +53,9 @@ const CreateCoursePage = () => {
                         <img src="/assets/images/icons/bill-black.svg" className="w-6 h-6" alt="icon" />
                         <select name="category" id="category" className="appearance-none outline-none w-full py-3 px-2 -mx-2 font-semibold placeholder:font-normal placeholder:text-[#838C9D] bg-transparent">
                             <option value="" hidden>Choose one category</option>
-                            <option value="">test</option>
-                            <option value="">test</option>
-                            <option value="">test</option>
+                            {categories?.data?.map((category) => (
+                                <option key={category._id} value={category._id}>{category.name}</option>
+                            ))}
                         </select>
                         <img src="/assets/images/icons/arrow-down.svg" className="w-6 h-6" alt="icon" />
                     </div>
@@ -73,7 +76,7 @@ const CreateCoursePage = () => {
                         Create Now
                     </button>
                 </div>
-            </form>
+            </form >
         </>
     );
 };
