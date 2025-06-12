@@ -1,15 +1,16 @@
 import React from 'react';
 import { useRef, useState } from 'react';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createCourseSchema } from '../../../utils/zodSchema';
+import { createCourseSchema, updateCourseSchema } from '../../../utils/zodSchema';
 import { useMutation } from '@tanstack/react-query';
-import { createCourse } from '../../../service/courseService';
+import { createCourse, updateCourse } from '../../../service/courseService';
 
 const CreateCoursePage = () => {
-    const categories = useLoaderData();
-    // console.log(categories);
+    const data = useLoaderData();
+    // console.log(data);
+    const { id } = useParams()
 
     const {
         register,
@@ -17,34 +18,52 @@ const CreateCoursePage = () => {
         formState: { errors },
         setValue
     } = useForm({
-        resolver: zodResolver(createCourseSchema)
+        resolver: zodResolver(data.course === null ? createCourseSchema : updateCourseSchema),
+        defaultValues: {
+            name: data?.course?.name,
+            description: data?.course?.description,
+            tagline: data?.course?.tagline,
+            categoryId: data?.course?.category
+        }
     })
 
     const [file, setFile] = useState(null);
     const inputFileRef = useRef(null);
 
-    const { isLoading, mutateAsync } = useMutation({
+    const mutateCreate = useMutation({
         mutationFn: (data) => createCourse(data)
     })
 
     const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        
+    const mutateUpdate = useMutation({
+        mutationFn: (data) => updateCourse(data, id)
+    })
+
+    const onSubmit = async (formDataInput) => {
+        console.log(formDataInput);
+
         try {
             const formData = new FormData();
-            formData.append('name', data.name);
-            formData.append('thumbnail', file);
-            formData.append('tagline', data.tagline);
-            formData.append('categoryId', data.categoryId);
-            formData.append('description', data.description);
-            await mutateAsync(formData);
+            formData.append('name', formDataInput.name);
+            formData.append('tagline', formDataInput.tagline);
+            formData.append('categoryId', formDataInput.categoryId);
+            formData.append('description', formDataInput.description);
+            if (file) {
+                formData.append('thumbnail', file);
+            }
+            if (data.course === null) {
+                await mutateCreate.mutateAsync(formData);
+            } else {
+                await mutateUpdate.mutateAsync(formData);
+            }
+
             navigate('/manager/courses');
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
+
     return (
         <>
             <header className="flex items-center justify-between gap-[30px]">
@@ -88,15 +107,16 @@ const CreateCoursePage = () => {
                         type="file"
                         accept="image/*"
                         className="hidden"
-                        ref={(e) => {
-                            register('thumbnail').ref(e);
-                            inputFileRef.current = e;
-                        }}
+                        {...register('thumbnail')}
+                        ref={inputFileRef}
                         onChange={(e) => {
-                            if (e.target.files && e.target.files.length > 0) {
-                                const selectedFile = e.target.files[0];
+                            const selectedFile = e.target.files?.[0];
+                            if (selectedFile) {
                                 setFile(selectedFile);
                                 setValue('thumbnail', selectedFile);
+                            } else {
+                                setFile(null);
+                                setValue('thumbnail', null); // biar validasi zod aman
                             }
                         }}
                     />
@@ -117,7 +137,7 @@ const CreateCoursePage = () => {
                         <img src="/assets/images/icons/bill-black.svg" className="w-6 h-6" alt="icon" />
                         <select {...register('categoryId')} id="category" className="appearance-none outline-none w-full py-3 px-2 -mx-2 font-semibold placeholder:font-normal placeholder:text-[#838C9D] bg-transparent">
                             <option value="" hidden>Choose one category</option>
-                            {categories?.data?.map((category) => (
+                            {data?.categories?.data?.map((category) => (
                                 <option key={category._id} value={category._id}>{category.name}</option>
                             ))}
                         </select>
@@ -138,7 +158,7 @@ const CreateCoursePage = () => {
                     <button type="button" className="w-full rounded-full border border-[#060A23] p-[14px_20px] font-semibold text-nowrap">
                         Save as Draft
                     </button>
-                    <button type="submit" disbabled={isLoading} className="w-full rounded-full p-[14px_20px] font-semibold text-[#FFFFFF] bg-[#662FFF] text-nowrap">
+                    <button type="submit" disabled={data.course === null ? mutateCreate.isLoading : mutateUpdate.isLoading} className="w-full rounded-full p-[14px_20px] font-semibold text-[#FFFFFF] bg-[#662FFF] text-nowrap">
                         Create Now
                     </button>
                 </div>

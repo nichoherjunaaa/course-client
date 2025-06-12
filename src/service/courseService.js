@@ -16,3 +16,15 @@ export const createCourse = async (data) => {
     });
     return res.data;
 }
+
+export const getCourseDetail = async (id) => {
+    const res = await apiInstanceAuth.get(`/course/${id}`);
+    return res.data;
+}
+
+export const updateCourse = async (data, id) => {
+    const res = await apiInstanceAuth.put(`/course/${id}`, data, { 
+        headers: { 'Content-Type': 'multipart/form-data' } 
+    });
+    return res.data;
+}

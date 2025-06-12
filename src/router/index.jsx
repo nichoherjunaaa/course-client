@@ -14,7 +14,7 @@ import StudentPage from '../pages/students/students-overview'
 import secureLocalStorage from 'react-secure-storage';
 import { MANAGER_SESSION, STORAGE_KEY } from './../utils/const';
 import { redirect } from 'react-router-dom';
-import { getCategories, getCourse } from '../service/courseService'
+import { getCategories, getCourse, getCourseDetail } from '../service/courseService'
 import { isTokenExpired } from '../utils/isToken'
 
 const router = createBrowserRouter([
@@ -63,10 +63,20 @@ const router = createBrowserRouter([
             },
             {
                 path: 'courses/create',
-                element: <CreateCoursePage />,
                 loader: async () => {
                     const categories = await getCategories();
-                    return categories;
+                    return { categories, course: null };
+                },
+                element: <CreateCoursePage />,
+            },
+            {
+                path: 'courses/edit/:id',
+                element: <CreateCoursePage />,
+                loader: async ({ params }) => {
+                    const categories = await getCategories();
+                    const course = await getCourseDetail(params.id);
+                    return { categories, course: course.data };
+
                 }
             },
             {
