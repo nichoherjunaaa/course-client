@@ -41,8 +41,7 @@ const CreateCoursePage = () => {
     })
 
     const onSubmit = async (formDataInput) => {
-        console.log(formDataInput);
-
+        // console.log(formDataInput);
         try {
             const formData = new FormData();
             formData.append('name', formDataInput.name);
