@@ -2,11 +2,11 @@ import React from 'react'
 import Proptypes from 'prop-types';
 import { Link } from 'react-router-dom';
 const CardContent = ({
-    index = 1, 
+    index = "1", 
     id = 1, 
     type = "Video", 
     title = "Install VSCode di Windows",
-    courseId = 2,
+    courseId = "2",
 }) => {
     return (
         <>
@@ -40,11 +40,11 @@ const CardContent = ({
 }
 
 CardContent.propTypes = {
-    index : Proptypes.number,
+    index : Proptypes.string,
     id : Proptypes.number,
     type : Proptypes.string,
     title : Proptypes.string,
-    courseId : Proptypes.number
+    courseId : Proptypes.string
 }
 
 export default CardContent

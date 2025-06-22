@@ -1,30 +1,30 @@
 import React from 'react'
 import CardContent from './card-content'
 import { Link } from 'react-router-dom'
-
-const TableContent = () => {
+import Proptypes from 'prop-types';
+const TableContent = ({details, courseId}) => {
+    console.log(details);
+    
     return (
         <>
             <section id="CourseList" className="flex flex-col w-full rounded-[30px] p-[30px] gap-[30px] bg-[#F8FAFB]">
                 <div className="header flex items-center justify-between">
                     <h2 className="font-bold text-[22px] leading-[33px]">Course Content</h2>
-                    <Link to="/manager/courses/1/create" className="w-fit rounded-full p-[14px_20px] font-semibold text-[#FFFFFF] bg-[#662FFF] text-nowrap">
+                    <Link to={`/manager/courses/${courseId}/create`} className="w-fit rounded-full p-[14px_20px] font-semibold text-[#FFFFFF] bg-[#662FFF] text-nowrap">
                         Add Content
                     </Link>
                 </div>
-                {/* Course Content Cards */}
-                <CardContent type="text"/>
-                <CardContent type="video"/>
-                <div id="Pagination" className="flex items-center gap-3">
-                    {[...Array(5)].map((_, index) => (
-                        <button type="button" className={`flex shrink-0 w-9 h-9 rounded-full items-center justify-center text-center transition-all duration-300 ${index === 0 ? 'bg-[#662FFF] text-white' : 'border border-[#060A23]'}`} key={index}>
-                            <span className="font-semibold text-sm leading-[21px]">{index + 1}</span>
-                        </button>
-                    ))}
-                </div>
+                {details.map((content, i) => (
+                    <CardContent key={content._id} type={content.type} title={content.title} id={content._id} courseIdd={courseId} index={i+1}/>
+                ))}
             </section>
         </>
     )
+}
+
+TableContent.propTypes = {
+    details : Proptypes.array,
+    courseId : Proptypes.string
 }
 
 export default TableContent

@@ -7,9 +7,6 @@ const CourseDetailPage = () => {
 
     const course = useLoaderData()
 
-    console.log(course);
-
-
     return (
         <>
             <div id="Breadcrumb" className="flex items-center gap-5 after:content-['/'] after:ml-5">
@@ -55,7 +52,7 @@ const CourseDetailPage = () => {
                     </div>
                 </div>
             </section>
-            <TableContent />
+            <TableContent details={course?.details ?? []} courseId = {course._id} />
         </>
     );
 };
